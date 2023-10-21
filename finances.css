@@ -1,0 +1,19 @@
+.wrapper {
+  width: 80%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+select {
+  height: 32px;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.center {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+}
