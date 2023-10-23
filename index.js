@@ -87,22 +87,21 @@ var finances = [
   ["Feb-2017", 671099],
 ];
 
-var totalMonths = finances.length;
-var totalProfitLoss = 0;
-var changes = [];
-var greatestIncrease = { date: "", amount: 0 };
-var greatestDecrease = { date: "", amount: 0 };
+let totalMonths = finances.length;
+let totalProfitLoss = 0;
+let totalChange = 0;
+let greatestIncrease = { date: "", amount: 0 };
+let greatestDecrease = { date: "", amount: 0 };
 
-for (var i = 0; i < finances.length; i++) {
-  var date = finances[i][0];
-  var profitLoss = finances[i][1];
+for (let i = 0; i < finances.length; i++) {
+  let date = finances[i][0];
+  let profitLoss = finances[i][1];
 
   totalProfitLoss += profitLoss;
 
   if (i > 0) {
-    var change = profitLoss - finances[i - 1][1];
-    changes.push(change);
-
+    let change = profitLoss - finances[i - 1][1];
+    totalChange += change;
     if (change > greatestIncrease.amount) {
       greatestIncrease.date = date;
       greatestIncrease.amount = change;
@@ -113,13 +112,35 @@ for (var i = 0; i < finances.length; i++) {
   }
 }
 
-var totalChange = changes.reduce((acc, curr) => acc + curr, 0);
-var averageChange = totalChange / (totalMonths - 1);
+let averageChange = totalChange / (totalMonths - 1);
+const roundedNumber = averageChange.toFixed(2);
 
+//For browser display
 document.getElementById("totalMonths").textContent = totalMonths;
 document.getElementById("totalProfitLoss").textContent = "$" + totalProfitLoss;
-document.getElementById("averageChange").textContent = averageChange;
+document.getElementById("averageChange").textContent = roundedNumber;
 document.getElementById("greatestIncrease").textContent =
   greatestIncrease.date + " ($" + greatestIncrease.amount + ")";
 document.getElementById("greatestDecrease").textContent =
   greatestDecrease.date + " ($" + greatestDecrease.amount + ")";
+
+//Display in console
+console.log("Financial Analysis");
+console.log("------------------------------------------------------");
+console.log("Total Months: " + totalMonths);
+console.log("Total Profit/Loss: $" + totalProfitLoss);
+console.log("Average Change: $" + roundedNumber);
+console.log(
+  "Greatest Increase in Profits: " +
+    greatestIncrease.date +
+    " ($" +
+    greatestIncrease.amount +
+    ")"
+);
+console.log(
+  "Greatest Decrease in Profits: " +
+    greatestDecrease.date +
+    " ($" +
+    greatestDecrease.amount +
+    ")"
+);
